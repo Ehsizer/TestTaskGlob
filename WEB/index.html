@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <link rel="stylesheet" href="Styles.css">
+    <script src="Back.js"></script>
+</head>
+<body>
+<div class="container">
+    <label id="InputContainer">
+        <input id="search" type="text">
+    </label>
+        <script>
+            function CatchData(data) {
+                let Container = document.createElement('div');
+                Container.classList.add('Container');
+                Container.style.alignSelf = 'center'
+                Container.style.width = '70vw';
+                Container.style.display = 'flex';
+                Container.style.alignItems = 'center';
+                Container.style.justifyContent= 'space-around'
+                Container.style.flexDirection = 'row';
+                Container.style.flexWrap = 'wrap'
+               // Container.style.justifyContent = 'space-evenly';
+                document.body.append(Container);
+                for (let i = data.length - 1; i > 0; i--) {
+                    // console.log(data[i - 1].name, data[i - 1].phone)
+
+                    let Info = document.createElement('div');
+
+                    Info.classList.add('BlockContainer');
+                    Info.classList.add('shadow');
+                    Info.style.flex = '1 400px'
+
+                    Info.style.alignSelf = 'center';
+                   // Info.style.display = 'inline-block'
+                   // Info.style.verticalAlign = 'baseline'
+                    //Info.style.marginLeft = '100px'
+                    //    Info.style.marginBottom = '200px'
+
+                    Info.innerHTML = '<span id="cardSpan cardName"> ' + data[i].name + '</span><span id="cardSpan cardPhone">' + data[i].phone + '</span><span id="cardSpan cardEmail">' + data[i].email + '</span>'
+                    document.body.append(Info);
+                    Container.appendChild(Info)
+                    Info.addEventListener('click', function handleClick() {
+                        console.log(data[i].name, data[i].phone, data[i].email);
+                    });
+                }
+            }
+        </script>
+    </div>
+<script>
+    fetch('http://127.0.0.1:3000/')
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            CatchData(data)
+        })
+</script>
+</body>
+</html>
