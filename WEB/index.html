@@ -5,19 +5,39 @@
     <title>$Title$</title>
     <link rel="stylesheet" href="Styles.css">
 </head>
-<body>
+<body onload="fetchData()">
 <div class="container">
     <label id="InputContainer">
         <i aria-hidden="true"></i>
-        <input id="search" type="text">
-
+        <input id="search" oninput="onDateChange();" type="text" style="color: #0a0000">
     </label>
         <script>
+            function fetchData(){
+            fetch('http://127.0.0.1:3000/')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    CatchData(data)
+                })
+            }
+            function onDateChange(){
+                let input = document.getElementsByTagName("input")[0].value;
+                fetch('http://127.0.0.1:3000?term='+input)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        let closeMod = document.getElementById('Container');
+                        closeMod.remove()
+                        CatchData(data)
+                    })
+            }
             function CatchData(data) {
                 let Container = document.createElement('div');
                 Container.classList.add('Container');
+                Container.id ="Container";
                 document.body.append(Container);
-                console.log(data.length)
                 for (let i = data.length - 1; i >= 0; i--) {
                     let Info = document.createElement('div');
                     Info.classList.add('BlockContainer');
@@ -29,53 +49,62 @@
                     Container.appendChild(Info)
                     Info.addEventListener('click', function handleClick() {
                         console.log(data[i].name, data[i].phone, data[i].email);
+                        window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        });
                         ShowModal(data[i].name, data[i].phone, data[i].email, data[i].hire_date, data[i].position_name,data[i].department);
                     });
                 }
-            }
+                }
             function ShowModal(name, phone, email, date, position, department){
                 let modal = document.createElement('div');
                 document.body.append(modal);
-                modal.innerHTML = '<div class="hystmodal" id="myModal" aria-hidden="true" style="' +
+                modal.innerHTML =
+                    '<div class="hystmodal" id="myModal" aria-hidden="true" style="' +
                     '    position: absolute;\n' +
                     '    top: 0;\n' +
                     '    left: 0;\n' +
                     '    width: 100%;\n' +
                     '    display: flex;\n' +
+                    '    z-index: 1;\n' +
                     '    justify-content: center;\n' +
                     '    height: '+ document.documentElement.scrollHeight+'px;\n' +
                     '    background: rgba(0,0,0,0.2);">\n' +
-                    '    <div class="hystmodal__wrap">\n' +
+                    '    <div class="hystmodal__wrap" id="modalWindow" style="margin-top: 120px">\n' +
                     '        <div class="hystmodal__window" role="dialog" aria-modal="true" style="' +
                     '               background-color: #fff;\n' +
                     '               border-radius : 15px;\n' +
+                    '               z-index : 3;\n' +
                     '               width: 500px;\n' +
                     '               padding-left: 2vw;\n' +
+                    '               padding-top: 1vh;\n' +
                     '               padding-right: 2vw;\n' +
                     '               min-height: 468px">\n' +
-                    '            <button data-hystclose class="hystmodal__close">Close</button>  \n' +
+                    '            <button data-hystclose class="hystmodal__close" id = "CloseBtn">x</button>  \n' +
                     '            <h1>'+ name +'</h1>\n' +
-                    '            <p>'+ phone +'</p>\n' +
-                    '            <p>'+ email +'</p>\n' +
-                    '            <p>'+ date +'</p>\n' +
-                    '            <p>'+ position +'</p>\n' +
-                    '            <p>'+ department +'</p>\n' +
+                    '            <p class = "grayText">'+ phone +'</p>\n' +
+                    '            <p class = "grayText">'+ email +'</p>\n' +
+                    '            <p class = "grayText">'+ date +'</p>\n' +
+                    '            <p class = "grayText">'+ position +'</p>\n' +
+                    '            <p class = "grayText">'+ department +'</p>\n' +
                     '            <h2 style="font-weight: 200;">Дополнительная информация:</h2> \n' +
-                    '            <span style="color: rgba(129, 137, 163, 1)">Разработчики используют текст в качестве заполнителя макта страницы. Разработчики используют текст в качестве заполнителя макта страницы.</span>\n' +
-                    '        </div>\n' +
+                    '            <span class = "grayText" style="padding-right: 24px; size: 24pt">Разработчики используют текст в качестве заполнителя макта страницы. Разработчики используют текст в качестве заполнителя макта страницы.</span>\n' +
+                    '        </div>\n' + +
                     '    </div>\n' +
-                    '</div>'
+                    '</div>';
+                modal.addEventListener('click', function handleClick() {
+                });
+                let closeMod = document.getElementById('myModal');
+                closeMod.onclick = function (event){
+                    let target = event.target;
+                    if(target.id === 'myModal' || target.id === 'CloseBtn'){
+                        closeMod.remove();
+                    }
+                }
             }
         </script>
     </div>
-<script>
-    fetch('http://127.0.0.1:3000/')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            CatchData(data)
-        })
-</script>
 </body>
 </html>

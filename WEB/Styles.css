@@ -49,3 +49,19 @@ span{
     flex-direction : row;
     flex-wrap : wrap
 }
+.grayText{
+    color: rgba(129, 137, 163, 1);
+    padding: 0;
+}
+.hystmodal__close{
+    float: right;
+    height: 24px;
+    width: 24px;
+    font-size: 34px;
+    outline: none;
+    border: 0;
+    background: transparent;
+}
+.active{
+    display: none;
+}
