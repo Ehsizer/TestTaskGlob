@@ -2,6 +2,8 @@ Body{
     margin: 0;
     background-color: #ffffff;
     width: 100%;
+    display: grid;
+    place-items: center;
 }
 
 .container{
@@ -13,22 +15,37 @@ Body{
 }
 input[type=text]{
     margin-top: 5vh;
-    width: 80vw;
-    height: 5vh;
+    width: 1121px;
+    height: 48px;
     border-radius: 20px;
     border: 1px solid #0a0000;
     color: #ffffff;
+
+    background-size: cover;
+    background: url(resources/лупа.png) no-repeat right center;
 }
 .BlockContainer{
-    height: 20vh;
     width: 25vw;
     color: black;
     margin: 10px;
+    border-radius : 15px;
+    height : 314px;
+    flex  : 1 350px;
+    align-self : center;
 }
 .shadow {
-    -moz-box-shadow: 0 0 30px 5px #999;
-    -webkit-box-shadow: 0 0 30px 5px #999;
+    -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
 }
 span{
     padding: 10px;
+}
+.Container{
+    position : relative;
+    width : 1121px;
+    display : flex;
+    align-items : center;
+    justify-content: space-around;
+    flex-direction : row;
+    flex-wrap : wrap
 }

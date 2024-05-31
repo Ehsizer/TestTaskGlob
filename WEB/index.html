@@ -4,48 +4,67 @@
     <meta charset="UTF-8">
     <title>$Title$</title>
     <link rel="stylesheet" href="Styles.css">
-    <script src="Back.js"></script>
 </head>
 <body>
 <div class="container">
     <label id="InputContainer">
+        <i aria-hidden="true"></i>
         <input id="search" type="text">
+
     </label>
         <script>
             function CatchData(data) {
                 let Container = document.createElement('div');
                 Container.classList.add('Container');
-                Container.style.alignSelf = 'center'
-                Container.style.width = '70vw';
-                Container.style.display = 'flex';
-                Container.style.alignItems = 'center';
-                Container.style.justifyContent= 'space-around'
-                Container.style.flexDirection = 'row';
-                Container.style.flexWrap = 'wrap'
-               // Container.style.justifyContent = 'space-evenly';
                 document.body.append(Container);
-                for (let i = data.length - 1; i > 0; i--) {
-                    // console.log(data[i - 1].name, data[i - 1].phone)
-
+                console.log(data.length)
+                for (let i = data.length - 1; i >= 0; i--) {
                     let Info = document.createElement('div');
-
                     Info.classList.add('BlockContainer');
                     Info.classList.add('shadow');
-                    Info.style.flex = '1 400px'
-
-                    Info.style.alignSelf = 'center';
-                   // Info.style.display = 'inline-block'
-                   // Info.style.verticalAlign = 'baseline'
-                    //Info.style.marginLeft = '100px'
-                    //    Info.style.marginBottom = '200px'
-
-                    Info.innerHTML = '<span id="cardSpan cardName"> ' + data[i].name + '</span><span id="cardSpan cardPhone">' + data[i].phone + '</span><span id="cardSpan cardEmail">' + data[i].email + '</span>'
+                    Info.innerHTML = '<div style="padding-left: 20px"><h1 id="cardSpan cardName"> ' + data[i].name + '</h1> <div style="  display:flex;\n' +
+                        '  align-items:center;\n"><img src="./resources/Frame%204806.png" width="24" height="24"><span style="width: 111px; color: rgba(129, 137, 163, 1)" id="cardSpan cardPhone">' + data[i].phone + '</div><div style="  display:flex;\n' +
+                        '  align-items:center;\n"><br><img src="resources/Frame%204807.png"></span><span style="width: 111px; color: rgba(129, 137, 163, 1)" id="cardSpan cardEmail">' + data[i].email + '</span></div></div>'
                     document.body.append(Info);
                     Container.appendChild(Info)
                     Info.addEventListener('click', function handleClick() {
                         console.log(data[i].name, data[i].phone, data[i].email);
+                        ShowModal(data[i].name, data[i].phone, data[i].email, data[i].hire_date, data[i].position_name,data[i].department);
                     });
                 }
+            }
+            function ShowModal(name, phone, email, date, position, department){
+                let modal = document.createElement('div');
+                document.body.append(modal);
+                modal.innerHTML = '<div class="hystmodal" id="myModal" aria-hidden="true" style="' +
+                    '    position: absolute;\n' +
+                    '    top: 0;\n' +
+                    '    left: 0;\n' +
+                    '    width: 100%;\n' +
+                    '    display: flex;\n' +
+                    '    justify-content: center;\n' +
+                    '    height: '+ document.documentElement.scrollHeight+'px;\n' +
+                    '    background: rgba(0,0,0,0.2);">\n' +
+                    '    <div class="hystmodal__wrap">\n' +
+                    '        <div class="hystmodal__window" role="dialog" aria-modal="true" style="' +
+                    '               background-color: #fff;\n' +
+                    '               border-radius : 15px;\n' +
+                    '               width: 500px;\n' +
+                    '               padding-left: 2vw;\n' +
+                    '               padding-right: 2vw;\n' +
+                    '               min-height: 468px">\n' +
+                    '            <button data-hystclose class="hystmodal__close">Close</button>  \n' +
+                    '            <h1>'+ name +'</h1>\n' +
+                    '            <p>'+ phone +'</p>\n' +
+                    '            <p>'+ email +'</p>\n' +
+                    '            <p>'+ date +'</p>\n' +
+                    '            <p>'+ position +'</p>\n' +
+                    '            <p>'+ department +'</p>\n' +
+                    '            <h2 style="font-weight: 200;">Дополнительная информация:</h2> \n' +
+                    '            <span style="color: rgba(129, 137, 163, 1)">Разработчики используют текст в качестве заполнителя макта страницы. Разработчики используют текст в качестве заполнителя макта страницы.</span>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</div>'
             }
         </script>
     </div>
